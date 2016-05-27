@@ -1,0 +1,71 @@
+package unicauca.movil.clima.net;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+/**
+ * Created by Dario Chamorro on 24/05/2016.
+ */
+public class HttpConnection {
+
+    public String get(String url) throws IOException {
+        URL u = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) u.openConnection();
+
+        con.setRequestMethod("GET");
+        con.setDoInput(true);
+
+        con.connect();
+
+        InputStream in = con.getInputStream();
+
+        return streamToString(in);
+    }
+
+    public String post(String url, String json) throws IOException {
+        return request("POST", url, json);
+    }
+
+    public String put(String url, String json) throws IOException {
+        return request("PUT", url, json);
+    }
+
+    public String delete(String url, String json) throws IOException {
+        return request("DELETE", url, json);
+    }
+
+    private String request(String method, String url, String json) throws IOException {
+
+        URL u = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) u.openConnection();
+
+        con.setRequestMethod(method);
+        con.setDoInput(true);
+
+        if(json!=null)
+            con.setDoOutput(true);
+
+        con.setRequestProperty("Content-Type","application/json");
+        con.connect();
+
+        if(json!=null){
+            DataOutputStream out = new DataOutputStream(con.getOutputStream());
+            out.write(json.getBytes());
+            out.flush();
+            out.close();
+        }
+
+        InputStream in = con.getInputStream();
+        return streamToString(in);
+    }
+
+    private String streamToString(InputStream in){
+        return null;
+    }
+
+
+}

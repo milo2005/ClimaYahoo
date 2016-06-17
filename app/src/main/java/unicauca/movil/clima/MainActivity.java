@@ -40,6 +40,18 @@ public class MainActivity extends AppCompatActivity implements HttpAsyncTask.OnH
             String humedad = atmosphere.getString("humidity");
             String presion = atmosphere.getString("pressure");
 
+            JSONObject item = channel.getJSONObject("item");
+            JSONObject condition = item.getJSONObject("condition");
+
+            String descripcion = condition.getString("text");
+            String temperatura = condition.getString("temp");
+
+            temp.setText(temperatura);
+            hum.setText(humedad);
+            des.setText(descripcion);
+            pres.setText(presion);
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();

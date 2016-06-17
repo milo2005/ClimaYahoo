@@ -47,7 +47,9 @@ public class HttpAsyncTask extends AsyncTask<String, Integer, String> {
                     rta = con.delete(params[0], params[1]);
                     break;
             }
-        }catch(IOException e){}
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         return rta;
     }
 

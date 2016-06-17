@@ -1,8 +1,10 @@
 package unicauca.movil.clima.net;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -62,8 +64,18 @@ public class HttpConnection {
         return streamToString(in);
     }
 
-    private String streamToString(InputStream in){
-        return null;
+    private String streamToString(InputStream in) throws IOException {
+        InputStreamReader reader = new InputStreamReader(in);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        int ch;
+        while((ch = reader.read())!= -1){
+            out.write(ch);
+        }
+
+        String rta = new String(out.toByteArray());
+
+        return rta;
     }
 
 
